@@ -68,153 +68,135 @@ export default function Home() {
   }
 
   return (
-    <div
-      style={{
-        width: "100%",
-        maxWidth: "750px",
-        minWidth: "100px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        alignContent: "center",
-        justifyContent: "center",
-        gap: "20px",
-      }}>
-      <h1
-        style={{
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignContent: "center",
-          alignItems: "center",
-          justifyContent: "center",
-          margin: "0px",
-          padding: "0px",
-          fontFamily: "Pacifico-Regular",
-        }}>
-        GENERATE BANNER
-        <br />
-        FOR YOUR GIT
-      </h1>
-      <h2>Settings:</h2>
-      <label className="item">
-        <p>Theme:</p>
-        <select value={theme} onChange={e => setTheme(e.target.value)}>
-          <option key="custom" value="custom">
-            Custom
-          </option>
-          {Object.keys(themes).map(t => (
-            <option key={t} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
-      </label>
-      {theme === "custom" && (
-        <>
-          <label className="item">
-            <p>Foreground color:</p>
-            <input type="color" className="color-selector" value={fg} onChange={e => setFg(e.target.value)} />
-          </label>
-          <label className="item">
-            <p>Background color:</p>
-            <input type="color" className="color-selector" value={bg} onChange={e => setBg(e.target.value)} />
-          </label>
-        </>
-      )}
-      <label className="item">
-        <p>Username:</p>
-        <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-      </label>
-      {!langs && (
-        <label className="item">
-          <p>Show avatar:</p>
-          <input type="checkbox" className="checkbox" checked={!hideAvatar} onChange={e => setHideAvatar(!e.target.checked)} />
-        </label>
-      )}
-      <label className="item">
-        <p>Languages mode:</p>
-        <input type="checkbox" className="checkbox" checked={langs} onChange={e => setLangs(e.target.checked)} />
-      </label>
-      <button type="button" onClick={() => setShowModal(true)} style={{ marginBottom: 16, width: 180 }}>
-        Select fields
-      </button>
-      {showModal && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            zIndex: 1000,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}>
-          <div
-            style={{
-              display: "flex",
-              background: "var(--bg2)",
-              backdropFilter: "blur(10px)",
-              borderRadius: 0,
-              padding: 32,
-              width: "100vw",
-              height: "100vh",
-              boxShadow: "var(--shadow)",
-              alignContent: "center",
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "column",
-            }}>
-            <h2 style={{ marginTop: 0, textAlign: "center" }}>Select fields to show</h2>
+    <>
+      <div className="deco-circle" />
+      <div className="deco-triangle" />
+      <div className="deco-rect" />
+
+      <header className="header">
+        <h1>Pretty Profile</h1>
+      </header>
+
+      <div className="settings-grid">
+        <div className="card card-pink">
+          <div className="card-label">// 01</div>
+          <h3>Style</h3>
+          <div className="item">
+            <p>Theme</p>
+            <select value={theme} onChange={e => setTheme(e.target.value)}>
+              <option key="custom" value="custom">
+                Custom
+              </option>
+              {Object.keys(themes).map(t => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+          </div>
+          {theme === "custom" && (
+            <>
+              <div className="item">
+                <p>Foreground</p>
+                <input type="color" value={fg} onChange={e => setFg(e.target.value)} />
+              </div>
+              <div className="item">
+                <p>Background</p>
+                <input type="color" value={bg} onChange={e => setBg(e.target.value)} />
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className="card card-yellow">
+          <div className="card-label">// 02</div>
+          <h3>Identity</h3>
+          <div className="item">
+            <p>Username</p>
+            <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
+          </div>
+          {!langs && (
+            <div className="item">
+              <p>Show Avatar</p>
+              <input type="checkbox" className="checkbox" checked={!hideAvatar} onChange={e => setHideAvatar(!e.target.checked)} />
+            </div>
+          )}
+          <div className="item">
+            <p>Languages</p>
+            <input type="checkbox" className="checkbox" checked={langs} onChange={e => setLangs(e.target.checked)} />
+          </div>
+        </div>
+
+        <div className="card card-blue card-full">
+          <div className="card-label">// 03</div>
+          <h3>Fields</h3>
+          <div className="item">
+            <p className="field-preview">{showFields.join(", ") || "none selected"}</p>
+            <button type="button" className="btn-pink" onClick={() => setShowModal(true)}>
+              Select
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="preview-section">
+        <h2 className="section-heading">Preview</h2>
+        <div className="preview-frame">
+          {svg ? (
+            <img src={`data:image/svg+xml;utf8,${encodeURIComponent(svg)}`} alt="Banner preview" />
+          ) : (
             <div
-              className="grid_1"
               style={{
-                display: "grid",
-                width: "auto",
-                marginBottom: 24,
-                gap: 10,
-                columnGap: 30,
-              }}>
+                padding: 40,
+                textAlign: "center",
+                fontFamily: "Iosevka Nerd Font",
+                fontSize: 14,
+                color: "#999",
+              }}
+            >
+              loading...
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="link-section">
+        <p ref={linkRef} className="link-paragraph">
+          {`https://pretty-profile.vercel.app/api/github-stats?username=${username}`}
+          {`&theme=${theme}`}
+          {`&hide_avatar=${hideAvatar ? "true" : "false"}`}
+          {`&langs=${langs ? "true" : "false"}`}
+          {!langs && `&show=${showFields.join(",")}`}
+        </p>
+        <div className="link-actions">
+          <button type="button" onClick={handleCopy}>
+            Copy Link
+          </button>
+          {copySuccess && <span className="copy-success">{copySuccess}</span>}
+        </div>
+      </div>
+
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-stripe" />
+            <h2>Select Fields</h2>
+            <div className="field-grid">
               {allFields.map(field => (
-                <label
-                  key={field}
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignContent: "center",
-                    alignItems: "center",
-                    textAlign: "left",
-                    gap: "8px",
-                    fontSize: 15,
-                  }}>
+                <label key={field} className="field-item">
                   <input type="checkbox" className="checkbox" checked={showFields.includes(field)} onChange={() => handleFieldChange(field)} />
                   {field}
                 </label>
               ))}
             </div>
-            <button type="button" onClick={() => setShowModal(false)} style={{ marginTop: 8, width: 100 }}>
-              Save
-            </button>
+            <div className="modal-actions">
+              <button type="button" className="btn-blue" onClick={() => setShowModal(false)}>
+                Save
+              </button>
+            </div>
           </div>
         </div>
       )}
-      <h2>Preview</h2>
-      {svg && <img src={`data:image/svg+xml;utf8,${encodeURIComponent(svg)}`} alt="Banner preview" style={{ width: "100%", maxWidth: 750, minWidth: 100 }} />}
-      <p ref={linkRef} className="link-paragraph">
-        {`https://pretty-profile.vercel.app/api/github-stats?username=${username}`}
-        {`&theme=${theme}`}
-        {`&hide_avatar=${hideAvatar ? "true" : "false"}`}
-        {`&langs=${langs ? "true" : "false"}`}
-        {!langs && `&show=${showFields.join(",")}`}
-      </p>
-      <button type="button" onClick={handleCopy} style={{ marginBottom: 8 }}>
-        Copy link
-      </button>
-      {copySuccess && <span style={{ marginLeft: 8, color: "green" }}>{copySuccess}</span>}
-    </div>
+    </>
   )
 }

@@ -85,11 +85,13 @@ const METRICS = {
 
 const calcExponentialCDF = (value: number, median: number): number => {
   if (value <= 0) return 0
+
   return 1 - Math.exp(-value / median)
 }
 
 const calcLogNormalCDF = (value: number, median: number): number => {
   if (value <= 0) return 0
+
   return Math.log(1 + value / median) / Math.log(1 + 1000 / median)
 }
 
@@ -254,12 +256,12 @@ function aggregateRepoStats(ownRepos: any[], contributedRepos: any[]) {
   for (const repo of ownRepos) {
     const repoKey = `${repo.name}`
     if (processedRepos.has(repoKey)) continue
-    
+
     processedRepos.add(repoKey)
     stars += repo.stargazerCount || 0
     forks += repo.forkCount || 0
     issues += repo.issues.totalCount || 0
-    
+
     if (repo.languages?.edges) {
       for (const lang of repo.languages.edges) {
         const langName = lang.node.name
@@ -278,12 +280,12 @@ function aggregateRepoStats(ownRepos: any[], contributedRepos: any[]) {
   for (const repo of contributedRepos) {
     const repoKey = `${repo.name}`
     if (processedRepos.has(repoKey)) continue
-    
+
     processedRepos.add(repoKey)
     stars += repo.stargazerCount || 0
     forks += repo.forkCount || 0
     issues += repo.issues.totalCount || 0
-    
+
     if (repo.languages?.edges) {
       for (const lang of repo.languages.edges) {
         const langName = lang.node.name
@@ -334,7 +336,7 @@ function isRateLimitError(e: any): boolean {
 async function tryGetStatsWithToken(username: string, token: string) {
   const user = await getGithubDataGraphQL(username, token)
   if (!user) throw new Error("User not found")
-  
+
   const ownRepos = user.repositories?.nodes || []
   const contributedRepos = user.repositoriesContributedTo?.nodes || []
   const repoStats = aggregateRepoStats(ownRepos, contributedRepos)
