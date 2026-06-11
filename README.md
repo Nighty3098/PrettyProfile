@@ -2,6 +2,8 @@
 
 **Pretty Banner** is a Next.js-based service for generating beautiful, customizable SVG banners with GitHub profile statistics. It is designed for use in GitHub READMEs, personal websites, and dashboards, providing visually appealing, themeable, and informative profile cards.
 
+https://pretty-profile.vercel.app/
+
 ## Features
 - Fetches and visualizes GitHub user statistics (repos, stars, followers, languages, etc.)
 - Generates SVG banners with multiple themes and custom backgrounds
@@ -155,3 +157,6 @@ Please report bugs and suggestions via [GitHub Issues](https://github.com/Nighty
 
 ## License
 This project is for personal use and demonstration. See repository for details.$$
+
+
+<img alt="Screenshot 2026-06-11 at 09-03-31 " src="https://github.com/user-attachments/assets/ce4cb4bd-7f5b-41a3-a09f-f51fb3dd09ea" />
