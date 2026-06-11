@@ -233,17 +233,72 @@ body {
   white-space: nowrap;
 }
 
-.item .field-preview {
+.fields-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  min-height: 36px;
+  align-items: center;
+}
+
+.field-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: "Iosevka Nerd Font", monospace;
   font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--white);
+  border: 2px solid var(--black);
+  padding: 4px 8px 4px 12px;
+  box-shadow: 3px 3px 0px var(--black);
+  transition: all 0.12s;
+}
+
+.field-chip:hover {
+  border-color: var(--pink);
+  box-shadow: 3px 3px 0px var(--pink);
+}
+
+.chip-remove {
+  all: unset;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 11px;
+  line-height: 1;
   color: var(--black);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  flex: 1;
-  text-align: right;
-  text-transform: none;
-  letter-spacing: 0;
+  background: var(--yellow);
+  border: 2px solid var(--black);
+  box-shadow: none;
+  padding: 0;
+  transition: all 0.12s;
+}
+
+.chip-remove:hover {
+  background: var(--pink);
+  color: var(--white);
+  transform: none;
+  box-shadow: none;
+}
+
+.fields-empty {
+  font-family: "Iosevka Nerd Font", monospace;
+  font-size: 12px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.fields-footer {
+  display: flex;
+  justify-content: flex-end;
 }
 
 input[type="text"],
@@ -520,10 +575,6 @@ button:active {
     flex-wrap: wrap;
   }
 
-  .item .field-preview {
-    width: 100%;
-    text-align: left;
-  }
 }
 
 @media (max-width: 500px) {

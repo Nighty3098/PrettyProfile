@@ -130,10 +130,20 @@ export default function Home() {
         <div className="card card-blue card-full">
           <div className="card-label">// 03</div>
           <h3>Fields</h3>
-          <div className="item">
-            <p className="field-preview">{showFields.join(", ") || "none selected"}</p>
+          <div className="fields-chips">
+            {showFields.length === 0 && <span className="fields-empty">none selected</span>}
+            {showFields.map(field => (
+              <span key={field} className="field-chip">
+                {field}
+                <button type="button" className="chip-remove" onClick={() => handleFieldChange(field)} aria-label={`Remove ${field}`}>
+                  ✕
+                </button>
+              </span>
+            ))}
+          </div>
+          <div className="fields-footer">
             <button type="button" className="btn-pink" onClick={() => setShowModal(true)}>
-              Select
+              + Select Fields
             </button>
           </div>
         </div>
