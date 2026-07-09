@@ -69,14 +69,6 @@ export default function Home() {
 
   return (
     <>
-      <div className="deco-circle" />
-      <div className="deco-triangle" />
-      <div className="deco-rect" />
-
-      <header className="header">
-        <h1>Pretty Profile</h1>
-      </header>
-
       <div className="settings-grid">
         <div className="card card-pink">
           <div className="card-label">// 01</div>
