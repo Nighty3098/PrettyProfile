@@ -158,5 +158,4 @@ Please report bugs and suggestions via [GitHub Issues](https://github.com/Nighty
 ## License
 This project is for personal use and demonstration. See repository for details.$$
 
-
-<img alt="Screenshot 2026-06-11 at 09-03-31 " src="https://github.com/user-attachments/assets/ce4cb4bd-7f5b-41a3-a09f-f51fb3dd09ea" />
+<img alt="Screenshot 2026-08-10 at 12-13-52 " src="https://github.com/user-attachments/assets/08cb121e-ef06-46e9-b2aa-1c175c459e30" />
