@@ -32,13 +32,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const langsFlag = langs === "true"
 
   const themeData = getTheme(typeof theme === "string" ? theme : "city", fgColor, bgColor)
-  const origin = req.headers.origin || `http://${req.headers.host}`
 
   const svg = await renderToSVG({
     stats: randomStats,
     theme: themeData,
     show: showList,
-    origin,
     about_me: aboutMeStr,
     hide_avatar: hide_avatar === "true",
     langs: langsFlag,

@@ -1,5 +1,7 @@
 import fetch from "node-fetch"
 
+import { getCachedStats, setCachedStats } from "./cache"
+
 interface GraphQLResponse {
   data?: {
     user?: {
@@ -221,29 +223,37 @@ async function getGithubDataGraphQL(username: string, token: string) {
     }
   `
 
-  const response = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query,
-      variables: { username },
-    }),
-  })
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 9_000)
 
-  if (!response.ok) {
-    throw new Error(`GraphQL request failed: ${response.status}`)
+  try {
+    const response = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query,
+        variables: { username },
+      }),
+      signal: controller.signal,
+    })
+
+    if (!response.ok) {
+      throw new Error(`GraphQL request failed: ${response.status}`)
+    }
+
+    const data = (await response.json()) as GraphQLResponse
+
+    if (data.errors) {
+      throw new Error(`GraphQL errors: ${data.errors.map(e => e.message).join(", ")}`)
+    }
+
+    return data.data?.user
+  } finally {
+    clearTimeout(timeout)
   }
-
-  const data = (await response.json()) as GraphQLResponse
-
-  if (data.errors) {
-    throw new Error(`GraphQL errors: ${data.errors.map(e => e.message).join(", ")}`)
-  }
-
-  return data.data?.user
 }
 
 function aggregateRepoStats(ownRepos: any[], contributedRepos: any[]) {
@@ -359,6 +369,22 @@ async function tryGetStatsWithToken(username: string, token: string) {
 }
 
 export async function getGithubStats(username: string) {
+  const key = username.toLowerCase()
+  const cached = getCachedStats(key)
+
+  if (cached?.fresh) {
+    console.log("[github] using cached stats for", username)
+
+    return cached.value
+  }
+
+  const stats = await fetchGithubStats(username)
+  setCachedStats(key, stats)
+
+  return stats
+}
+
+async function fetchGithubStats(username: string) {
   const tokens = getAllGithubTokens()
   let lastError: any = null
 

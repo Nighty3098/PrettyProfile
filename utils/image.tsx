@@ -8,7 +8,6 @@ interface RenderParams {
   stats: any
   theme: Theme
   show?: string[]
-  origin: string
   about_me: string
   hide_avatar?: boolean
   langs?: boolean
@@ -43,8 +42,28 @@ function getFieldsToShow(show: string[], allFields: string[], defaultFields: str
   return show.length > 0 ? show.filter(f => allFields.includes(f)) : defaultFields
 }
 
-function getBgUrl(theme: Theme, origin: string): string | undefined {
-  return theme.backgroundImage ? origin + theme.backgroundImage : undefined
+const bgImageCache = new Map<string, string>()
+
+function getBgDataUri(theme: Theme): string | undefined {
+  if (!theme.backgroundImage) return undefined
+
+  const cached = bgImageCache.get(theme.backgroundImage)
+  if (cached) return cached
+
+  try {
+    const absPath = path.resolve(process.cwd(), "public", theme.backgroundImage.replace(/^\//, ""))
+    const buf = fs.readFileSync(absPath)
+    const ext = path.extname(absPath).toLowerCase()
+    const mime = ext === ".jpg" || ext === ".jpeg" ? "image/jpeg" : "image/png"
+    const dataUri = `data:${mime};base64,${buf.toString("base64")}`
+    bgImageCache.set(theme.backgroundImage, dataUri)
+
+    return dataUri
+  } catch (e) {
+    console.error("[satori] Failed to inline background image:", theme.backgroundImage, e)
+
+    return undefined
+  }
 }
 
 function renderLangsBlock(sortedLangs: any[], total: number, theme: Theme) {
@@ -190,7 +209,7 @@ function renderAboutMeBlock(about_me: string) {
   )
 }
 
-export async function renderToSVG({ stats, theme, show = [], origin, about_me, hide_avatar = false, langs = false }: RenderParams): Promise<string> {
+export async function renderToSVG({ stats, theme, show = [], about_me, hide_avatar = false, langs = false }: RenderParams): Promise<string> {
   console.log("[satori] stats:", stats)
   console.log("[satori] theme:", theme)
 
@@ -215,7 +234,7 @@ export async function renderToSVG({ stats, theme, show = [], origin, about_me, h
   ]
   const defaultFields = ["repoCount", "stars", "followers", "following", "issues"]
   const fieldsToShow = getFieldsToShow(show, allFields, defaultFields)
-  const bgUrl = getBgUrl(theme, origin)
+  const bgUrl = getBgDataUri(theme)
 
   if (langs && Array.isArray(stats.languages) && stats.languages.length > 0) {
     const sortedLangs = [...stats.languages].sort((a, b) => b.size - a.size).slice(0, 6)
