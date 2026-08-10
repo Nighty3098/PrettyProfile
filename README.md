@@ -45,19 +45,19 @@ https://pretty-profile.vercel.app/api/github-stats?username=Nighty3098&theme=anc
 https://pretty-profile.vercel.app/api/github-stats?username=Nighty3098&theme=ancient&langs=true
 ```
 
-### Simple:
+### Landscape with a Cottage:
 
-![](https://pretty-profile.vercel.app/api/github-stats?username=Nighty3098&theme=simple)
-
-```
-https://pretty-profile.vercel.app/api/github-stats?username=Nighty3098&theme=simple
-```
-
-
-![](https://pretty-profile.vercel.app/api/github-stats?username=Nighty3098&theme=simple&langs=true)
+![](https://pretty-profile.vercel.app/api/github-stats?username=Nighty3098&theme=landscape_with_a_cottage)
 
 ```
-https://pretty-profile.vercel.app/api/github-stats?username=Nighty3098&theme=simple&langs=true
+https://pretty-profile.vercel.app/api/github-stats?username=Nighty3098&theme=landscape_with_a_cottage
+```
+
+
+![](https://pretty-profile.vercel.app/api/github-stats?username=Nighty3098&theme=landscape_with_a_cottage&langs=true)
+
+```
+https://pretty-profile.vercel.app/api/github-stats?username=Nighty3098&theme=landscape_with_a_cottage&langs=true
 ```
 
 ### Custom
@@ -96,6 +96,8 @@ GET /api/github-stats
 
 ## Available Themes
 - city
+- landscape_with_a_cottage
+- california_spring
 - forest
 - japan
 - night

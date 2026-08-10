@@ -7,6 +7,20 @@ export type Theme = {
 }
 
 export const themes: Record<string, Theme> = {
+  california_spring: {
+    name: "california_spring",
+    background: "#312411",
+    backgroundImage: "/images/California_Spring.png",
+    color: "#D1C99B",
+    accent: "#455B61",
+  },
+  landscape_with_a_cottage: {
+    name: "landscape_with_a_cottage",
+    background: "#312411",
+    backgroundImage: "/images/Landscape_with_a_Cottage.png",
+    color: "#BABDA3",
+    accent: "#877747",
+  },
   everforest_sea: {
     name: "everforest_sea",
     background: "#D3C6AA",
