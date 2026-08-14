@@ -80,73 +80,83 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="settings-grid">
-        <div className="card">
-          <h3>Style</h3>
-          <div className="item">
-            <p>Theme</p>
-            <select value={theme} onChange={e => setTheme(e.target.value)}>
-              <option key="custom" value="custom">
-                Custom
-              </option>
-              {Object.keys(themes).map(t => (
-                <option key={t} value={t}>
-                  {t}
+      <div className="studio">
+        <header className="studio-headbar">
+          <h2 className="studio-heading">Configure your banner</h2>
+        </header>
+
+        <section className="studio-section">
+          <h3 className="studio-label">Style</h3>
+          <div className="studio-fields">
+            <div className="field-row">
+              <label htmlFor="theme">Theme</label>
+              <select id="theme" value={theme} onChange={e => setTheme(e.target.value)}>
+                <option key="custom" value="custom">
+                  Custom
                 </option>
-              ))}
-            </select>
-          </div>
-          {theme === "custom" && (
-            <>
-              <div className="item">
-                <p>Foreground</p>
-                <input type="color" value={fg} onChange={e => setFg(e.target.value)} />
-              </div>
-              <div className="item">
-                <p>Background</p>
-                <input type="color" value={bg} onChange={e => setBg(e.target.value)} />
-              </div>
-            </>
-          )}
-        </div>
-
-        <div className="card">
-          <h3>Identity</h3>
-          <div className="item">
-            <p>Username</p>
-            <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-          </div>
-          {!langs && (
-            <div className="item">
-              <p>Show Avatar</p>
-              <input type="checkbox" className="checkbox" checked={!hideAvatar} onChange={e => setHideAvatar(!e.target.checked)} />
+                {Object.keys(themes).map(t => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
             </div>
-          )}
-          <div className="item">
-            <p>Languages</p>
-            <input type="checkbox" className="checkbox" checked={langs} onChange={e => setLangs(e.target.checked)} />
+            {theme === "custom" && (
+              <>
+                <div className="field-row">
+                  <label htmlFor="fg">Foreground</label>
+                  <input id="fg" type="color" value={fg} onChange={e => setFg(e.target.value)} />
+                </div>
+                <div className="field-row">
+                  <label htmlFor="bg">Background</label>
+                  <input id="bg" type="color" value={bg} onChange={e => setBg(e.target.value)} />
+                </div>
+              </>
+            )}
           </div>
-        </div>
+        </section>
 
-        <div className="card card-full">
-          <h3>Fields</h3>
-          <div className="fields-chips">
-            {showFields.length === 0 && <span className="fields-empty">none selected</span>}
-            {showFields.map(field => (
-              <span key={field} className="field-chip">
-                {field}
-                <button type="button" className="chip-remove" onClick={() => handleFieldChange(field)} aria-label={`Remove ${field}`}>
-                  ✕
-                </button>
-              </span>
-            ))}
+        <section className="studio-section">
+          <h3 className="studio-label">Identity</h3>
+          <div className="studio-fields">
+            <div className="field-row">
+              <label htmlFor="username">Username</label>
+              <input id="username" type="text" value={username} onChange={e => setUsername(e.target.value)} />
+            </div>
+            {!langs && (
+              <div className="field-row">
+                <label htmlFor="hideAvatar">Show Avatar</label>
+                <input id="hideAvatar" type="checkbox" className="checkbox" checked={!hideAvatar} onChange={e => setHideAvatar(!e.target.checked)} />
+              </div>
+            )}
+            <div className="field-row">
+              <label htmlFor="langs">Languages</label>
+              <input id="langs" type="checkbox" className="checkbox" checked={langs} onChange={e => setLangs(e.target.checked)} />
+            </div>
           </div>
-          <div className="fields-footer">
-            <button type="button" className="btn-accent" onClick={() => setShowModal(true)}>
-              Select Fields
-            </button>
+        </section>
+
+        <section className="studio-section">
+          <h3 className="studio-label">Fields</h3>
+          <div className="studio-fields">
+            <div className="fields-chips">
+              {showFields.length === 0 && <span className="fields-empty">none selected</span>}
+              {showFields.map(field => (
+                <span key={field} className="field-chip">
+                  {field}
+                  <button type="button" className="chip-remove" onClick={() => handleFieldChange(field)} aria-label={`Remove ${field}`}>
+                    ✕
+                  </button>
+                </span>
+              ))}
+            </div>
+            <div className="fields-footer">
+              <button type="button" className="btn-accent" onClick={() => setShowModal(true)}>
+                Select Fields
+              </button>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
 
       <div className="preview-section">
