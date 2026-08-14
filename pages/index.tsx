@@ -68,10 +68,20 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className="app">
+      <div className="bg-noise" aria-hidden="true" />
+
+      <section className="hero">
+        <div className="hero-title-wrap">
+          <h1 className="hero-title">
+            <span className="hero-line hero-line-left">Pretty</span>
+            <span className="hero-line hero-line-right">Banner</span>
+          </h1>
+        </div>
+      </section>
+
       <div className="settings-grid">
-        <div className="card card-pink">
-          <div className="card-label">// 01</div>
+        <div className="card">
           <h3>Style</h3>
           <div className="item">
             <p>Theme</p>
@@ -100,8 +110,7 @@ export default function Home() {
           )}
         </div>
 
-        <div className="card card-yellow">
-          <div className="card-label">// 02</div>
+        <div className="card">
           <h3>Identity</h3>
           <div className="item">
             <p>Username</p>
@@ -119,8 +128,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="card card-blue card-full">
-          <div className="card-label">// 03</div>
+        <div className="card card-full">
           <h3>Fields</h3>
           <div className="fields-chips">
             {showFields.length === 0 && <span className="fields-empty">none selected</span>}
@@ -134,15 +142,14 @@ export default function Home() {
             ))}
           </div>
           <div className="fields-footer">
-            <button type="button" className="btn-pink" onClick={() => setShowModal(true)}>
-              + Select Fields
+            <button type="button" className="btn-accent" onClick={() => setShowModal(true)}>
+              Select Fields
             </button>
           </div>
         </div>
       </div>
 
       <div className="preview-section">
-        <h2 className="section-heading">Preview</h2>
         <div className="preview-frame">
           {svg ? (
             <img src={`data:image/svg+xml;utf8,${encodeURIComponent(svg)}`} alt="Banner preview" />
@@ -171,7 +178,7 @@ export default function Home() {
           {!langs && `&show=${showFields.join(",")}`}
         </p>
         <div className="link-actions">
-          <button type="button" onClick={handleCopy}>
+          <button type="button" className="btn-dark" onClick={handleCopy}>
             Copy Link
           </button>
           {copySuccess && <span className="copy-success">{copySuccess}</span>}
@@ -180,25 +187,31 @@ export default function Home() {
 
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <div className="modal-stripe" />
-            <h2>Select Fields</h2>
-            <div className="field-grid">
-              {allFields.map(field => (
-                <label key={field} className="field-item">
-                  <input type="checkbox" className="checkbox" checked={showFields.includes(field)} onChange={() => handleFieldChange(field)} />
-                  {field}
-                </label>
-              ))}
-            </div>
-            <div className="modal-actions">
-              <button type="button" className="btn-blue" onClick={() => setShowModal(false)}>
-                Save
-              </button>
+          <div className="modal-frame" onClick={e => e.stopPropagation()}>
+            <div className="modal-content">
+              <h2>Select Fields</h2>
+              <div className="field-grid">
+                {allFields.map(field => (
+                  <label key={field} className="field-item">
+                    <input type="checkbox" className="checkbox" checked={showFields.includes(field)} onChange={() => handleFieldChange(field)} />
+                    {field}
+                  </label>
+                ))}
+              </div>
+              <div className="modal-actions">
+                <button type="button" className="btn-accent" onClick={() => setShowModal(false)}>
+                  Save
+                </button>
+              </div>
             </div>
           </div>
         </div>
       )}
-    </>
+
+      <footer className="footer">
+        <p>Pretty Banner</p>
+        <span>design your github profile banner</span>
+      </footer>
+    </div>
   )
 }

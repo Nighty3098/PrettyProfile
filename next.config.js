@@ -18,7 +18,8 @@ const nextConfig = {
               "img-src 'self' https://camo.githubusercontent.com data:; " +
               "script-src-elem 'sha256-ZswfTY7H35rbv8WC7NXBoiC7WNu86vSzCDChNWwZZDM=' " +
               "'sha256-yei5Fza+Eyx4G0smvN0xBqEesIKumz6RSyGsU3FJowI='; " +
-              "style-src 'self' 'unsafe-inline';",
+              "style-src 'self' 'unsafe-inline'; " +
+              "font-src 'self' data:;",
           },
           {
             key: "Cache-Control",
